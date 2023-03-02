@@ -1,0 +1,6 @@
+*.ipynb
+tfjs_model/
+image_set/
+tfjs_version/
+trained_model/
+.ipynb_checkpoints
