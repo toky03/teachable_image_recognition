@@ -10,7 +10,7 @@ Build and train a Model based on Labeled images to predict a single output
 
 1. (Optional) create a virtual environemnt `python3 -m venv venv`
 2. (Optional) virtual environemnt already exists start it `source venv/bin/activate`
-3. Install all the dependencies stated in [requirements.txt](./requirements.txt) `pip install requirements.txt`
+3. Install all the dependencies stated in [requirements.txt](./requirements.txt) `pip install -r requirements.txt`
 4. Start building and training `python3 main.py`
 5. During the execution, windows will pop up during execution to show examples. As long as the window is open, the
    execution is paused so to continue one have to close the window

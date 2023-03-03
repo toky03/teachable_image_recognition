@@ -4,3 +4,5 @@ image_set/
 tfjs_version/
 trained_model/
 .ipynb_checkpoints
+layered_model/
+cli_project/

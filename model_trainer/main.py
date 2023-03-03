@@ -68,7 +68,7 @@ def create_model(train_dataset, validation_dataset, retrain):
 
 
 def main(train=True):
-    train_ds, val_ds = load_data('../image_set')
+    train_ds, val_ds = load_data('image_set')
     presentation.print_example_images(train_ds)
     test_dataset, validation_dataset = split_batches(val_ds)
     train_dataset, test_dataset, validation_dataset = add_auto_tune(train_ds, test_dataset, validation_dataset)

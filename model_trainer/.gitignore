@@ -4,3 +4,4 @@ venv/
 image_set
 .idea
 __pycache__/
+image_set/
