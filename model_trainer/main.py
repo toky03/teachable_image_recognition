@@ -33,6 +33,13 @@ def split_batches(validation_dataset):
     return test_dataset, validation_dataset
 
 
+def save_tf_lite_model(layered_model):
+    converter = tf.lite.TFLiteConverter.from_keras_model(layered_model)
+    tflite_model = converter.convert()
+    with open('../layered_model.tflite', 'wb') as f:
+        f.write(tflite_model)
+
+
 def add_auto_tune(train_dataset, test_dataset, validation_dataset):
     AUTOTUNE = tf.data.AUTOTUNE
     train_dataset = train_dataset.prefetch(buffer_size=AUTOTUNE)
@@ -54,7 +61,8 @@ def create_predictions(layered_model, test_dataset):
 
 def create_model(train_dataset, validation_dataset, retrain):
     if not retrain:
-        layered_model = tf.keras.models.load_model('layered_model')
+        layered_model = tf.keras.models.load_model('../layered_model')
+        save_tf_lite_model(layered_model)
         return layered_model
     base_model, layered_model = model.crete_layered_model(IMG_SIZE, train_dataset)
     model.compile_model(layered_model)
@@ -62,13 +70,14 @@ def create_model(train_dataset, validation_dataset, retrain):
     acc, val_acc, loss, val_loss = presentation.print_evaluation_chart(history)
     history_finetuned = model.fine_tune(layered_model, base_model, train_dataset, validation_dataset, history)
     presentation.print_evaluation_chart(history_finetuned, 10, acc, val_acc, loss, val_loss)
-    base_model.save('base_model')
-    layered_model.save('layered_model')
+    base_model.save('../base_model')
+    layered_model.save('../layered_model')
+    save_tf_lite_model(layered_model)
     return layered_model
 
 
-def main(train=True):
-    train_ds, val_ds = load_data('image_set')
+def main(train=False):
+    train_ds, val_ds = load_data('../image_set')
     presentation.print_example_images(train_ds)
     test_dataset, validation_dataset = split_batches(val_ds)
     train_dataset, test_dataset, validation_dataset = add_auto_tune(train_ds, test_dataset, validation_dataset)

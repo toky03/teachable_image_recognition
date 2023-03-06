@@ -6,3 +6,6 @@ trained_model/
 .ipynb_checkpoints
 layered_model/
 cli_project/
+base_model/
+layered_model/
+layered_model.tflite

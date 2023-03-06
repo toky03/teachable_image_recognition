@@ -4,7 +4,7 @@ Build and train a Model based on Labeled images to predict a single output
 
 ## Requirements
 
-1. save pictures inside a folder called `image_set` within label subfolders `label_a` and `label_b`
+1. save pictures inside a folder called `../image_set` within label subfolders `label_a` and `label_b` or run [photo_collector](../photo_collector/)
 
 ## Build the Model (one can skip building and training with calling the [main function](./main.py) with the argument: False)
 

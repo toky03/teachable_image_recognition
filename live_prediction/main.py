@@ -1,31 +1,50 @@
-import tensorflow as tf
+import tensorflow.lite as tf
 import cv2
 import numpy as np
 
 
 def load_model(model_location):
-    return tf.keras.models.load_model(model_location)
+    interpreter = tf.Interpreter(model_path=model_location)
+    interpreter.allocate_tensors()
+    return interpreter
+
+
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
 
 
 def cv2_to_tensor(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image = cv2.resize(image, (160, 160))
-    image_array = np.asarray(image)
+    image_array = np.asarray(image, dtype='float32')
     return np.expand_dims(image_array, axis=0)
 
 
-def predict(model, frame):
-    tensor = cv2_to_tensor(frame)
-    predictions = model.predict(tensor).flatten()
-    predictions = tf.nn.sigmoid(predictions)
+def invoke_interpreter(interpreter, frame):
+    # Get input and output tensors.
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
 
-    return predictions
+    interpreter.set_tensor(input_details[0]['index'], frame)
+
+    interpreter.invoke()
+
+    return interpreter.get_tensor(output_details[0]['index'])
+
+
+def predict(interpreter, frame):
+    tensor = cv2_to_tensor(frame)
+    predictions = invoke_interpreter(interpreter, tensor).flatten()
+    predictions = sigmoid(predictions)
+    text = np.where(predictions < 0.5, '1', '0')
+
+    return text
 
 
 def stream_and_predict(model, video):
     while True:
         ret, frame = video.read()
-        prediction = predict(model, frame).numpy()
+        prediction = predict(model, frame)
 
         cv2.putText(frame, str(prediction), (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
@@ -35,9 +54,9 @@ def stream_and_predict(model, video):
 
 
 def main():
-    model = load_model('layered_model')
+    interpreter = load_model("../layered_model.tflite")
     vid = cv2.VideoCapture(0)
-    stream_and_predict(model, vid)
+    stream_and_predict(interpreter, vid)
     vid.release()
     cv2.destroyAllWindows()
 
