@@ -76,7 +76,7 @@ def create_model(train_dataset, validation_dataset, retrain):
     return layered_model
 
 
-def main(train=False):
+def main(train=True):
     train_ds, val_ds = load_data('../image_set')
     presentation.print_example_images(train_ds)
     test_dataset, validation_dataset = split_batches(val_ds)
@@ -87,6 +87,5 @@ def main(train=False):
     presentation.print_example_predictions(predictions, label_batch, image_batch, class_names)
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     main()
