@@ -34,9 +34,9 @@ def invoke_interpreter(interpreter, frame):
 
 def predict(interpreter, frame):
     tensor = cv2_to_tensor(frame)
-    predictions = invoke_interpreter(interpreter, tensor).flatten()
-    predictions = sigmoid(predictions)
-    text = np.where(predictions < 0.5, '1', '0')
+    predictions = invoke_interpreter(interpreter, tensor)
+    predictions = np.argmax(predictions)
+    text = predictions
 
     return text
 

@@ -52,10 +52,11 @@ def create_predictions(layered_model, test_dataset):
     loss, accuracy = layered_model.evaluate(test_dataset)
     print('Test accuracy:', accuracy)
     image_batch, label_batch = test_dataset.as_numpy_iterator().next()
-    predictions = layered_model.predict_on_batch(image_batch).flatten()
+    predictions = layered_model.predict_on_batch(image_batch)
 
-    predictions = tf.nn.sigmoid(predictions)
-    predictions = tf.where(predictions < 0.5, 0, 1)
+    #predictions = tf.nn.sigmoid(predictions)
+    #predictions = tf.where(predictions < 0.5, 0, 1)
+    predictions = tf.argmax(predictions, axis=1)
     return predictions, image_batch, label_batch
 
 

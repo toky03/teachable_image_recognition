@@ -8,7 +8,7 @@ def _create_base_model(image_size):
     IMG_SHAPE = image_size + (3,)
     base_model = tf.keras.applications.MobileNetV2(input_shape=IMG_SHAPE,
                                                    include_top=False,
-                                                   weights='imagenet')
+                                                   weights='imagenet', classes=4)
     base_model.trainable = False
     base_model.summary()
     return base_model
@@ -26,7 +26,7 @@ def _create_averaging_layer(feature_batch):
 
 
 def _create_prediction_layer(feature_batch_average):
-    prediction_layer = tf.keras.layers.Dense(1)
+    prediction_layer = tf.keras.layers.Dense(4, activation='softmax')
     prediction_batch = prediction_layer(feature_batch_average)
     return prediction_layer, prediction_batch
 
@@ -56,7 +56,7 @@ def crete_layered_model(image_size, train_dataset):
 
 def compile_model(model):
     model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=BASE_LEARNING_RATE),
-                  loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
+                  loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                   metrics=['accuracy'])
     model.summary()
 
@@ -80,7 +80,7 @@ def _refine_trainable_layers(base_model):
 
 
 def _compile_for_fine_tune(model):
-    model.compile(loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
+    model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                   optimizer=tf.keras.optimizers.RMSprop(learning_rate=BASE_LEARNING_RATE / 10),
                   metrics=['accuracy'])
     model.summary()

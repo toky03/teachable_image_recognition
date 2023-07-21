@@ -36,8 +36,7 @@ def invoke_interpreter(interpreter, frame):
 def predict(interpreter, frame):
     tensor = cv2_to_tensor(frame)
     predictions = invoke_interpreter(interpreter, tensor).flatten()
-    predictions = sigmoid(predictions)
-    pred = np.where(predictions < 0.5, 1, 0)
+    pred = np.argmax(predictions)
 
     return pred
 
@@ -48,7 +47,7 @@ def stream_and_predict(model, video, led):
         ret, frame = video.read()
         frame = cv2.rotate(frame, cv2.ROTATE_180)
         prediction = predict(model, frame)
-        if prediction[0] > 0:
+        if prediction[0] < 3:
             led.on()
         else:
             led.off()
