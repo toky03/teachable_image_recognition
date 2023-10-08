@@ -2,6 +2,7 @@ import tflite_runtime.interpreter as tflite
 import cv2
 import numpy as np
 from gpiozero import LED
+import time
 
 
 def load_model(model_location):
@@ -46,7 +47,11 @@ def stream_and_predict(model, video, led):
     while True:
         ret, frame = video.read()
         frame = cv2.rotate(frame, cv2.ROTATE_180)
+        start_time = time.time()
         prediction = predict(model, frame)
+        duration = time.time() - start_time
+        print(str(1/duration) + " fps")
+
         if prediction[0] < 3:
             led.on()
         else:

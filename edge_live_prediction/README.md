@@ -10,6 +10,17 @@ sudo apt install python3-opencv
 2. The Model needs to have a Input Shape of `(160, 160)`
 3. The Output needs to be a single number
 
+## Install corad dependencies
+```shell
+echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sudo tee /etc/apt/sources.list.d/coral-edgetpu.list
+
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
+sudo apt-get update
+```
+`sudo apt-get install libedgetpu1-std`
+`sudo apt-get install python3-pycoral`
+
 ## Run the Model
 1. Install tensorflow Lite
   a. either from [source](https://www.tensorflow.org/lite/guide/build_cmake_pip)
