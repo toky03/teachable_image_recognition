@@ -1,6 +1,7 @@
 import tensorflow.lite as tf
 import cv2
 import numpy as np
+import time
 
 
 def load_model(model_location):
@@ -44,9 +45,13 @@ def predict(interpreter, frame):
 def stream_and_predict(model, video):
     while True:
         ret, frame = video.read()
+        start_time = time.time()
         prediction = predict(model, frame)
+        duration = time.time() - start_time
 
         cv2.putText(frame, str(prediction), (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        cv2.putText(frame, str(1/duration) + " fps", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+
 
         cv2.imshow('frame', frame)
         if cv2.waitKey(1) == ord('q') & 0xFF:
