@@ -44,7 +44,7 @@ def crete_layered_model(image_size, train_dataset):
     features_batch = _split_features_labels(base_model, train_dataset)
     global_average_layer, feature_batch_average = _create_averaging_layer(features_batch)
     prediction_layer, prediction_batch = _create_prediction_layer(feature_batch_average)
-    inputs = tf.keras.Input(shape=(160, 160, 3))
+    inputs = tf.keras.Input(shape=(640, 640, 3))
     x = PreprocessLayer()(inputs)
     x = base_model(x, training=False)
     x = global_average_layer(x)

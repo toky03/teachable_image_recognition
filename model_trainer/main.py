@@ -3,7 +3,7 @@ import tensorflow as tf
 import model
 import presentation
 
-IMG_SIZE = (160, 160)
+IMG_SIZE = (640, 640)
 BATCH_SIZE = 10
 
 

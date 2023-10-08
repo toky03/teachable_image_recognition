@@ -17,7 +17,7 @@ def sigmoid(x):
 
 def cv2_to_tensor(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    image = cv2.resize(image, (160, 160))
+    image = cv2.resize(image, (640, 640))
     image_array = np.asarray(image, dtype='float32')
     return np.expand_dims(image_array, axis=0)
 
