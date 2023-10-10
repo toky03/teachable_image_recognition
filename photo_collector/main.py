@@ -13,7 +13,6 @@ def prepare_folders():
     create_folder_if_not_exists(base_folder+'/image_set')
     create_folder_if_not_exists(base_folder+'/image_set/label_a')
     create_folder_if_not_exists(base_folder+'/image_set/label_b')
-    create_folder_if_not_exists(base_folder+'/image_set/label_c')
     create_folder_if_not_exists(base_folder+'/image_set/label_l')
 
 
@@ -34,10 +33,6 @@ def collect_pictures(video):
         elif key == ord('s'):
             cv2.imwrite(base_folder+'/image_set/label_b/{}.png'.format(str(counter)), frame)
             print('image b saved')
-            counter += 1
-        elif key == ord('d'):
-            cv2.imwrite(base_folder+'/image_set/label_c/{}.png'.format(str(counter)), frame)
-            print('image c saved')
             counter += 1
         elif key == ord('l'):
             cv2.imwrite(base_folder+'/image_set/label_l/{}.png'.format(str(counter)), frame)

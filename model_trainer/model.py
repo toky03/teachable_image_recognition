@@ -8,7 +8,7 @@ def _create_base_model(image_size):
     IMG_SHAPE = image_size + (3,)
     base_model = tf.keras.applications.MobileNetV2(input_shape=IMG_SHAPE,
                                                    include_top=False,
-                                                   weights='imagenet', classes=4)
+                                                   weights='imagenet', classes=3)
     base_model.trainable = False
     base_model.summary()
     return base_model
@@ -26,7 +26,7 @@ def _create_averaging_layer(feature_batch):
 
 
 def _create_prediction_layer(feature_batch_average):
-    prediction_layer = tf.keras.layers.Dense(4, activation='softmax')
+    prediction_layer = tf.keras.layers.Dense(3, activation='softmax')
     prediction_batch = prediction_layer(feature_batch_average)
     return prediction_layer, prediction_batch
 
