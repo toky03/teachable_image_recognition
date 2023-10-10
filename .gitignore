@@ -8,3 +8,5 @@ layered_model/
 cli_project/
 base_model/
 layered_model/
+object_detection_models/**
+classification_model/**

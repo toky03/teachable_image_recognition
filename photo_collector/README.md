@@ -8,3 +8,5 @@ Collect labeled Images to train a Tensorflow model
 4. Start webcam `python3 main.py`
 5. Take photos from webcam with key `a`, `s`, `d` and `l` to label them
 6. The Images are saved inside the folder `image_set`
+7. Save a labels.txt File with the names of each category per line and save it under [classification_model](../classification_model/)
+8. Create a edgetpu tflite from the original tflite file with the [Edgetpu compiler](https://coral.ai/docs/edgetpu/compiler)

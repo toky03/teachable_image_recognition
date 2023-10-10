@@ -72,7 +72,7 @@ def create_model(train_dataset, validation_dataset, retrain):
     history_finetuned = model.fine_tune(layered_model, base_model, train_dataset, validation_dataset, history)
     presentation.print_evaluation_chart(history_finetuned, 10, acc, val_acc, loss, val_loss)
     base_model.save('../base_model')
-    layered_model.save('../layered_model')
+    layered_model.save('../classification_model/classification_model.tflite')
     save_tf_lite_model(layered_model)
     return layered_model
 

@@ -21,7 +21,7 @@ def collect_pictures(video):
     counter = 0
     while True:
         ret, frame = video.read()
-        frame = cv2.rotate(frame,cv2.ROTATE_180)
+        # frame = cv2.rotate(frame,cv2.ROTATE_180)
         frame = cv2.resize(frame, (640, 640))
         cv2.imshow('frame', frame)
         key = cv2.waitKey(1) & 0xFF
