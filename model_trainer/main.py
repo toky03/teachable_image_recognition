@@ -85,6 +85,7 @@ def main(train=True):
     layered_model = create_model(train_dataset, validation_dataset, train)
     predictions, image_batch, label_batch = create_predictions(layered_model, test_dataset)
     class_names = train_ds.class_names
+    print(class_names)
     presentation.print_example_predictions(predictions, label_batch, image_batch, class_names)
 
 

@@ -26,7 +26,7 @@ def _create_averaging_layer(feature_batch):
 
 
 def _create_prediction_layer(feature_batch_average):
-    prediction_layer = tf.keras.layers.Dense(4, activation='softmax')
+    prediction_layer = tf.keras.layers.Dense(18, activation='softmax')
     prediction_batch = prediction_layer(feature_batch_average)
     return prediction_layer, prediction_batch
 
